@@ -13,7 +13,7 @@ public:
     virtual int getValue() = 0;
     virtual int getX() = 0;
     virtual int getY() = 0;
-    //virtual sf::Sprite * getSprite() = 0;
+    virtual sf::Sprite * getSprite() = 0;
 };
 
 

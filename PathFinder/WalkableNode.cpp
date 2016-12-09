@@ -6,6 +6,12 @@
 #include "WalkableNode.h"
 
 WalkableNode::WalkableNode(int x, int y , int v) : posX(x) , posY(y) , value(v) {
+    if(!texture.loadFromFile("img/red.png"))
+    {
+        std::cout<<"Error";
+    }
+    sprite = new sf::Sprite(texture);
+    sprite->setPosition(50*posX,50*posY);
 }
 
 WalkableNode * WalkableNode::operator =(WalkableNode &rhs) {
@@ -28,5 +34,9 @@ int WalkableNode::getY() {
 
 int WalkableNode::getValue() {
     return value;
+}
+
+sf::Sprite *WalkableNode::getSprite() {
+    return sprite;
 }
 

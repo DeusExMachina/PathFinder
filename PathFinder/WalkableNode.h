@@ -20,7 +20,7 @@ public:
 
     WalkableNode * operator = (WalkableNode& rhs);
 
-    //sf::Sprite * getSprite();
+    sf::Sprite * getSprite();
 private:
     int posX;
     int posY;

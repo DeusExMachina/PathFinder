@@ -67,8 +67,7 @@ bool MapSearchNode::GetSuccessors( AStarSearch<MapSearchNode> *astarsearch, MapS
     // push each possible move except allowing the search to go backwards
 
     if( (Map::get_instance().getSelectedCell( x-1, y ) < 9)
-        && !((parent_x == x-1) && (parent_y == y))
-            )
+        && !((parent_x == x-1) && (parent_y == y)))
     {
         NewNode = MapSearchNode( x-1, y );
         astarsearch->AddSuccessor( NewNode );

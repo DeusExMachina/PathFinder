@@ -3,7 +3,9 @@
 //
 
 #include <iostream>
+#include <SFML/Window/Event.hpp>
 #include "Map.h"
+#include "MapSearchNode.h"
 
 void Map::printNodeInfo() {
     std::vector<Terrain *>::const_iterator i;
@@ -20,6 +22,7 @@ void Map::printNodeInfo() {
 }
 
 void Map::init() {
+
     green_node.push_back(new WalkableNode(0, 0, 1));
     green_node.push_back(new WalkableNode(0, 1, 1));
     green_node.push_back(new WalkableNode(0, 2, 1));
@@ -80,7 +83,7 @@ void Map::init() {
     green_node.push_back(new WalkableNode(5, 2, 9));
     green_node.push_back(new WalkableNode(5, 3, 9));
     green_node.push_back(new WalkableNode(5, 4, 1));
-    green_node.push_back(new WalkableNode(5, 5, 9));
+    green_node.push_back(new WalkableNode(5, 5, 4));
     green_node.push_back(new WalkableNode(5, 6, 1));
     green_node.push_back(new WalkableNode(5, 7, 1));
     green_node.push_back(new WalkableNode(5, 8, 9));
@@ -155,3 +158,149 @@ Map::Map() {
     width = 10;
     height = 10;
 }
+
+sf::Sprite *Map::getSelectedSprite(int x, int y) {
+    if(x < 0 || x >= width || y < 0 || y >= height )
+        return nullptr;
+    return green_node[y*width + x]->getSprite();
+}
+
+void Map::startPathfinding() {
+
+    AStarSearch<MapSearchNode> astarsearch;
+    unsigned int SearchCount = 0;
+    const unsigned int NumSearches = 1;
+
+    while(SearchCount < NumSearches)
+    {
+        // Create a start state
+        MapSearchNode nodeStart;
+        nodeStart.x = 5;
+        nodeStart.y = 4;
+        std::cout<<"NodeStart : x ("<<nodeStart.x<<") y ("<<nodeStart.y<<") value:"<<Map::get_instance().getSelectedCell(nodeStart.x , nodeStart.y)<<std::endl;
+
+        // Define the goal state
+        MapSearchNode nodeEnd;
+        nodeEnd.x = 6;
+        nodeEnd.y = 5;
+        std::cout<<"NodeEnd : x ("<<nodeEnd.x<<") y ("<<nodeEnd.y<<") value:"<<Map::get_instance().getSelectedCell(nodeStart.x , nodeStart.y)<<std::endl;
+
+        // Set Start and goal states
+        astarsearch.SetStartAndGoalStates( nodeStart, nodeEnd );
+
+        unsigned int SearchState;
+        unsigned int SearchSteps = 0;
+
+        do
+        {
+            SearchState = astarsearch.SearchStep();
+            SearchSteps++;
+
+#if DEBUG_LISTS
+
+            cout << "Steps:" << SearchSteps << "\n";
+            int len = 0;
+			cout << "Open:\n";
+			MapSearchNode *p = astarsearch.GetOpenListStart();
+			while( p )
+			{
+				len++;
+	#if !DEBUG_LIST_LENGTHS_ONLY
+				((MapSearchNode *)p)->PrintNodeInfo();
+	#endif
+				p = astarsearch.GetOpenListNext();
+
+			}
+
+			cout << "Open list has " << len << " nodes\n";
+			len = 0;
+			cout << "Closed:\n";
+			p = astarsearch.GetClosedListStart();
+			while( p )
+			{
+				len++;
+	#if !DEBUG_LIST_LENGTHS_ONLY
+				p->PrintNodeInfo();
+	#endif
+				p = astarsearch.GetClosedListNext();
+			}
+			cout << "Closed list has " << len << " nodes\n";
+#endif
+
+        }
+        while( SearchState == AStarSearch<MapSearchNode>::SEARCH_STATE_SEARCHING );
+
+        if( SearchState == AStarSearch<MapSearchNode>::SEARCH_STATE_SUCCEEDED )
+        {
+            cout << "Search found goal state\n";
+            MapSearchNode *node = astarsearch.GetSolutionStart();
+
+#if DISPLAY_SOLUTION
+            cout << "Displaying solution\n";
+#endif
+            int steps = 0;
+            node->PrintNodeInfo();
+            for( ;; )
+            {
+                node = astarsearch.GetSolutionNext();
+                if( !node )
+                {
+                    break;
+                }
+                node->PrintNodeInfo();
+                steps ++;
+            };
+
+            cout << "Solution steps " << steps << endl;
+
+            // Once you're done with the solution you can free the nodes up
+            astarsearch.FreeSolutionNodes();
+        }
+
+        else if( SearchState == AStarSearch<MapSearchNode>::SEARCH_STATE_FAILED )
+        {
+            cout << "Search terminated. Did not find goal state\n";
+
+        }
+
+        // Display the number of loops the search went through
+        cout << "SearchSteps : " << SearchSteps << "\n";
+        SearchCount ++;
+        astarsearch.EnsureMemoryFreed();
+    }
+
+}
+
+void Map::display() {
+    window = new sf::RenderWindow(sf::VideoMode(600 , 600), "PathFinder");
+    int x;
+    int y;
+    while (window->isOpen())
+    {
+        sf::Event event;
+        while (window->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window->close();
+            else if (event.type == sf::Event::KeyPressed)
+            {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                {
+                    Map::get_instance().startPathfinding();
+                }
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                {
+                    Map::get_instance().printNodeInfo();
+                }
+            }
+        }
+        window->clear(sf::Color::White);
+        for(x = 0;x<width;x++) {
+            for (y = 0; y < height; y++)
+                window->draw(*Map::getSelectedSprite(x, y));
+        }
+        window->display();
+    }
+}
+

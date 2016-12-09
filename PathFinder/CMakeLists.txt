@@ -3,12 +3,12 @@ project(PathFinder)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp Terrain.h WalkableNode.cpp WalkableNode.h Map.cpp Map.h MapSearchNode.cpp MapSearchNode.h fsa.h stlastar.h)
+set(SOURCE_FILES main.cpp Terrain.h WalkableNode.cpp WalkableNode.h Map.cpp Map.h MapSearchNode.cpp MapSearchNode.h fsa.h stlastar.h GameCharacter.cpp GameCharacter.h)
 add_executable(PathFinder ${SOURCE_FILES})
 set(EXECUTABLE_NAME "PathFinder")
 
 #img dir
-#configure_file(img/red.png ${CMAKE_CURRENT_BINARY_DIR}/img/red.png COPYONLY)
+configure_file(img/red.png ${CMAKE_CURRENT_BINARY_DIR}/img/red.png COPYONLY)
 #configure_file(img/link.png ${CMAKE_CURRENT_BINARY_DIR}/img/link.png COPYONLY)
 
 # Detect and add SFML
