@@ -5,17 +5,18 @@
 #include <iostream>
 #include "WalkableNode.h"
 
-WalkableNode::WalkableNode(int x, int y , int v) : posX(x) , posY(y) , value(v) {
-    if(!texture.loadFromFile("img/red.png"))
+WalkableNode::WalkableNode(int x, int y) : posX(x) , posY(y) {
+    if(!texture.loadFromFile("img/ground_one.png"))
     {
         std::cout<<"Error";
     }
+    value = 1;
     sprite = new sf::Sprite(texture);
     sprite->setPosition(50*posX,50*posY);
 }
 
 WalkableNode * WalkableNode::operator =(WalkableNode &rhs) {
-    return new WalkableNode(rhs.posX , rhs.posY , rhs.value);
+    return new WalkableNode(rhs.posX , rhs.posY);
 }
 
 WalkableNode::WalkableNode(const WalkableNode& rhs) {

@@ -2,9 +2,12 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/UnwalkableNode.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/stlastar.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Terrain.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MapSearchNode.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/img/ground_nine.png" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/img/ground_one.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/img/red.png" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MapSearchNode.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameCharacter.h" isTestSource="false" />
@@ -12,6 +15,7 @@
       <sourceFolder url="file://$MODULE_DIR$/WalkableNode.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Map.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameCharacter.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/UnwalkableNode.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Map.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />

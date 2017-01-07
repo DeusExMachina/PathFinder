@@ -12,7 +12,7 @@
 
 class WalkableNode : public Terrain {
 public:
-    WalkableNode(int x , int y , int value);
+    WalkableNode(int x , int y);
     WalkableNode(const WalkableNode& rhs);
     int getValue();
     int getX();
