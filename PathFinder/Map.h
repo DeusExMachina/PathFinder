@@ -8,24 +8,23 @@
 
 #include <vector>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "WalkableNode.h"
+#include "Ground.h"
 
 class Map {
 public:
     static Map& get_instance();
-    void init();
-    void printNodeInfo();
-    void startPathfinding();
     void display();
-    void selectedCell(int x , int y);
     int getSelectedCell(int x , int y);
+    int loadFromTxt();
     sf::Sprite * getSelectedSprite(int x , int y);
+    int startPF(int startX, int startY, int endX , int endY );
+    Terrain* getGround(int x , int y);
 private:
-    Map();;
+    Map();
     Map(const Map&);
     void operator=(const Map&);
 
-    std::vector<Terrain *> green_node;
+    std::vector<Terrain *> tile;
     sf::RenderWindow * window;
     int width;
     int height;

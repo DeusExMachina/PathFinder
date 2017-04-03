@@ -14,6 +14,7 @@ public:
     virtual int getX() = 0;
     virtual int getY() = 0;
     virtual sf::Sprite * getSprite() = 0;
+    virtual void trackedPath(int x , int y , sf::Sprite * sprite) = 0;
 };
 
 

@@ -2,25 +2,24 @@
 // Created by zairai on 25/11/16.
 //
 
-#ifndef PATHFINDER_WALKABLENODE_H
-#define PATHFINDER_WALKABLENODE_H
+#ifndef PATHFINDER_GROUND_H
+#define PATHFINDER_GROUND_H
 
 
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include "Terrain.h"
 
-class WalkableNode : public Terrain {
+class Ground : public Terrain {
 public:
-    WalkableNode(int x , int y);
-    WalkableNode(const WalkableNode& rhs);
+    Ground(int x , int y , int v);
+    Ground(const Ground& rhs);
     int getValue();
     int getX();
     int getY();
-
-    WalkableNode * operator = (WalkableNode& rhs);
-
+    Ground * operator = (Ground& rhs);
     sf::Sprite * getSprite();
+    void trackedPath(int x , int y , sf::Sprite * sprite);
 private:
     int posX;
     int posY;
@@ -30,4 +29,4 @@ private:
 };
 
 
-#endif //PATHFINDER_WALKABLENODE_H
+#endif //PATHFINDER_GROUND_H
