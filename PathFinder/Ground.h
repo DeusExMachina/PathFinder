@@ -10,6 +10,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "Terrain.h"
 
+// class ground
+
 class Ground : public Terrain {
 public:
     Ground(int x , int y , int v);
